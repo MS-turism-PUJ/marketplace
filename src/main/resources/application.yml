@@ -7,7 +7,7 @@ spring:
 
 server:
   # To avoid colliding with other apps in port 8080
-  port: 8082
+  port: 8083
 
 eureka:
   client:
