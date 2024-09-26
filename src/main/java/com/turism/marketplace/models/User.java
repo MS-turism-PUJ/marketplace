@@ -29,9 +29,5 @@ public class User {
     private String email;
     private String photo;
     private String userType;
-    @OneToMany (mappedBy = "payment")
-    private List<Payment> payment;
-
-    @OneToMany (mappedBy = "content")
-    private List<Content> Content;
+    //hacer lista de contenidos y payments
 }

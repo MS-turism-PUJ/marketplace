@@ -9,3 +9,4 @@ spring:
     import:
       - file:../.env[.properties]
       - configserver:http://localhost:8888
+
