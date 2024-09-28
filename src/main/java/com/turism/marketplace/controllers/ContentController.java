@@ -28,9 +28,4 @@ public class ContentController {
         return contentRepository.findById(contentId);
     }
 
-    
-
-    
-
-    
 }
