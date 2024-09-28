@@ -26,8 +26,14 @@ public class User {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
     private String email;
     private String photo;
-    private String userType;
     //hacer lista de contenidos y payments
+    @OneToMany (mappedBy = "contentId")
+    private List<Content> contents;
+    @OneToMany (mappedBy = "paymentId")
+    private List<Payment> payments;
+    
 }

@@ -1,14 +1,51 @@
+type Service {
+    serviceId: ID!
+    price: Float!
+    name: String!
+    description: String
+    serviceCategory: String!
+    latitude: Float
+    longitude: Float
+    departureDate: String
+    arrivalDate: String
+    transportType: String
+    content: Content
+    payment: Payment
+}
+
 type Query {
-    bookById(id: ID): Book
+    allServices: [Service]
+    serviceById(serviceId: ID!): Service
+
+
+    allContents: [Content]
+    contentById(contentId: ID!): Content
 }
-type Book {
-    id: ID
+
+type Mutation {
+    createService(price: Float!, name: String!, description: String, serviceCategory: String!): Service
+    updateService(serviceId: ID!, price: Float, name: String, description: String, serviceCategory: String): Service
+    deleteService(serviceId: ID!): Boolean
+}
+
+type Content {
+    contentId: ID!
     name: String
-    pageCount: Int
-    author: Author
+    description: String
+    service:Service
+    user: User
 }
-type Author {
-    id: ID
-    firstName: String
-    lastName: String
+
+type Payment {
+    paymentId: ID!
+    totalAmount: Float!
+    userId: ID!
+    paid: Boolean!
+}
+type User {
+    userId: ID!
+    name: String!
+    email: String!
+    username: String!
+    photo: String
 }

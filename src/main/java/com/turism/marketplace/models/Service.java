@@ -1,51 +1,52 @@
 package com.turism.marketplace.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
+@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table  (name = "services")
+@Table(name = "services")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
     private String serviceId;
+
     @Column(nullable = false)
     private Float price;
+
     @Column(nullable = false)
     private String name;
+
     private String description;
+
     @Column(nullable = false)
     private String serviceCategory;
-    
-    private Double Latitude;
-    
-    private Double Longitude;
-    
+
+    private Double latitude;
+
+    private Double longitude;
+
     private Date departureDate;
-    
+
     private Date arrivalDate;
 
     private String transportType;
-    @ManyToOne
-    @JoinColumn(name = "content_id")
-    private Content category;
-    @OneToOne
-    @JoinColumn(name = "payment_id")
-    private Payment content;
+
+    // Relación Many-to-Many con Payment
+    @ManyToMany
+    @JoinTable(
+        name = "payment_has_services", // Nombre de la tabla intermedia
+        joinColumns = @JoinColumn(name = "service_id"), // Columna que representa esta entidad en la tabla intermedia
+        inverseJoinColumns = @JoinColumn(name = "payment_id") // Columna que representa la otra entidad
+    )
+    private Set<Payment> payments;
 }

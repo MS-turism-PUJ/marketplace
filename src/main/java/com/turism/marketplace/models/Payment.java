@@ -20,14 +20,12 @@ import lombok.NoArgsConstructor;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
     private String paymentId;
     @Column(nullable = false)
     private Long totalAmount;
+    @Column(nullable = false)
+    private boolean paid;
     @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 }

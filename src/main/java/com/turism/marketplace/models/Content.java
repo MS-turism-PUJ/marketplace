@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,6 @@ import lombok.NoArgsConstructor;
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false)
     private String contentId;
     private String photo;
     @Column(nullable = false)
@@ -32,8 +32,11 @@ public class Content {
     private String link;
     private String category;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
-    //hacer en el servicio lo agregar una lista de ellos
+    @OneToOne
+    @JoinColumn(name = "serviceId")
+    private Service service;
+
 
 }
