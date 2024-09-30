@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Table  (name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
     private String userId;
     @Column(nullable = false)
@@ -36,4 +35,11 @@ public class User {
     @OneToMany (mappedBy = "paymentId")
     private List<Payment> payments;
     
+    public User(String userId, String username, String name, String email, String photo) {
+        this.userId = userId;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.photo = photo;
+    }
 }

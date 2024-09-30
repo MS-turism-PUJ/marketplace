@@ -1,21 +1,24 @@
 package com.turism.marketplace.dtos;
 
+import com.turism.marketplace.models.User;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-
 public class UserMessageDTO implements Serializable{
-    private LocalDateTime dateTime;
-    private String myMessageText;
+    private String userId;
+    private String username;
+    private String name;
+    private String email;
+    private String photo;
+
+    public User toUser() {
+        return new User(userId, username, name, email, photo);
+    }
 }
 
