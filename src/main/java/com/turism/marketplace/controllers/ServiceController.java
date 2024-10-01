@@ -28,14 +28,22 @@ public class ServiceController {
         return serviceRepository.findById(serviceId);
     }
 
+    @QueryMapping
+    public List<Service> servicesByCategory(@Argument String serviceCategory) {
+        return serviceRepository.findByServiceCategory(serviceCategory);
+    }
+
     @MutationMapping
-    public Service createService(@Argument Float price, @Argument String name, @Argument String description, @Argument String serviceCategory) {
-        Service service = new Service(null, price, name, description, serviceCategory, null, null, null, null, null, null);
+    public Service createService(@Argument Float price, @Argument String name, @Argument String description,
+            @Argument String serviceCategory) {
+        Service service = new Service(null, price, name, description, serviceCategory, null, null, null, null, null,
+                null, null, null);
         return serviceRepository.save(service);
     }
 
     @MutationMapping
-    public Service updateService(@Argument String serviceId, @Argument Float price, @Argument String name, @Argument String description, @Argument String serviceCategory) {
+    public Service updateService(@Argument String serviceId, @Argument Float price, @Argument String name,
+            @Argument String description, @Argument String serviceCategory) {
         return serviceRepository.findById(serviceId).map(service -> {
             service.setPrice(price);
             service.setName(name);

@@ -41,12 +41,18 @@ public class Service {
 
     private String transportType;
 
+    @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
+    private String city;
+
     // Relación Many-to-Many con Payment
     @ManyToMany
-    @JoinTable(
-        name = "payment_has_services", // Nombre de la tabla intermedia
-        joinColumns = @JoinColumn(name = "service_id"), // Columna que representa esta entidad en la tabla intermedia
-        inverseJoinColumns = @JoinColumn(name = "payment_id") // Columna que representa la otra entidad
+    @JoinTable(name = "payment_has_services", // Nombre de la tabla intermedia
+            joinColumns = @JoinColumn(name = "service_id"), // Columna que representa esta entidad en la tabla
+                                                            // intermedia
+            inverseJoinColumns = @JoinColumn(name = "payment_id") // Columna que representa la otra entidad
     )
     private Set<Payment> payments;
 }

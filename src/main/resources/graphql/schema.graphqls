@@ -16,6 +16,7 @@ type Service {
 type Query {
     allServices: [Service]
     serviceById(serviceId: ID!): Service
+    servicesByCategory(serviceCategory: String!): [Service]
 
 
     allContents: [Content]
@@ -49,3 +50,4 @@ type User {
     username: String!
     photo: String
 }
+
