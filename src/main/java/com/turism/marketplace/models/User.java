@@ -28,18 +28,15 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String email;
-    private String photo;
-    //hacer lista de contenidos y payments
     @OneToMany (mappedBy = "contentId")
     private List<Content> contents;
     @OneToMany (mappedBy = "paymentId")
     private List<Payment> payments;
     
-    public User(String userId, String username, String name, String email, String photo) {
+    public User(String userId, String username, String name, String email) {
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
-        this.photo = photo;
     }
 }
