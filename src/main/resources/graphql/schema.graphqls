@@ -9,8 +9,8 @@ type Service {
     departureDate: String
     arrivalDate: String
     transportType: String
-    content: Content
-    payment: Payment
+    content: Content!
+    payment: Payment!
 }
 
 type Query {
@@ -19,11 +19,10 @@ type Query {
     servicesByCategory(serviceCategory: String!): [Service]
     servicesByWord(word: String!): [Service]
 
-
     allContents: [Content]
     contentById(contentId: ID!): Content
 
-    findByUser: [Payment]
+    findAllByUser: [Payment]
 }
 
 type Mutation {
