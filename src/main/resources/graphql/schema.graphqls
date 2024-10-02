@@ -11,6 +11,8 @@ type Service {
     transportType: String
     content: Content
     payment: Payment
+    country: String
+    city: String
 }
 
 type Query {
