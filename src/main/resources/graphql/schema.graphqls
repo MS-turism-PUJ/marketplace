@@ -9,8 +9,10 @@ type Service {
     departureDate: String
     arrivalDate: String
     transportType: String
-    content: Content!
-    payment: Payment!
+    content: Content
+    payment: Payment
+    country: String
+    city: String
 }
 
 type Query {
