@@ -27,5 +27,4 @@ public class ContentController {
     public Optional<Content> contentById(@Argument String contentId) {
         return contentRepository.findById(contentId);
     }
-
 }

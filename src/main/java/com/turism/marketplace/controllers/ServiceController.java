@@ -51,7 +51,7 @@ public class ServiceController {
     public Service createService(@Argument Float price, @Argument String name, @Argument String description,
             @Argument String serviceCategory) {
         Service service = new Service(null, price, name, description, serviceCategory, null, null, null, null, null,
-                null, null, null);
+                null, null);
         return serviceRepository.save(service);
     }
 

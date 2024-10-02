@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentRepository extends JpaRepository<Payment, String> {
 
-    List<Payment> findByUser(User user);
+    List<Payment> findByUserAndPaidTrue(User user);
+    Payment findByUserAndPaidFalse(User user);
 }

@@ -10,7 +10,6 @@ type Service {
     arrivalDate: String
     transportType: String
     content: Content
-    payment: Payment
     country: String
     city: String
 }
@@ -25,12 +24,15 @@ type Query {
     contentById(contentId: ID!): Content
 
     findAllByUser: [Payment]
+    getShoppingCart: Payment
 }
 
 type Mutation {
     createService(price: Float!, name: String!, description: String, serviceCategory: String!): Service
     updateService(serviceId: ID!, price: Float, name: String, description: String, serviceCategory: String): Service
     deleteService(serviceId: ID!): Boolean
+    pay: String
+    addToShoppingCart(serviceId: ID!): String
 }
 
 type Content {
@@ -46,6 +48,7 @@ type Payment {
     totalAmount: Float!
     userId: ID!
     paid: Boolean!
+    services: [Service]
 }
 type User {
     userId: ID!

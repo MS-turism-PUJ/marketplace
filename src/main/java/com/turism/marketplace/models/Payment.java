@@ -1,19 +1,15 @@
 package com.turism.marketplace.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table  (name = "payments")
@@ -22,10 +18,24 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String paymentId;
     @Column(nullable = false)
-    private Long totalAmount;
+    private Float totalAmount;
     @Column(nullable = false)
     private boolean paid;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+    @ManyToMany
+    @JoinTable(name = "payment_has_services", // Nombre de la tabla intermedia
+            joinColumns = @JoinColumn(name = "payment_id"), // Columna que representa esta entidad en la tabla
+            // intermedia
+            inverseJoinColumns = @JoinColumn(name = "service_id") // Columna que representa la otra entidad
+    )
+    private List<Service> services;
+
+    public Payment(Float totalAmount, User user) {
+        this.totalAmount = totalAmount;
+        this.paid = false;
+        this.user = user;
+        this.services = new ArrayList<>();
+    }
 }
