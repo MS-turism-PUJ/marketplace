@@ -22,6 +22,8 @@ type Query {
 
     allContents: [Content]
     contentById(contentId: ID!): Content
+
+    findByUser: [Payment]
 }
 
 type Mutation {
