@@ -1,3 +1,19 @@
+type User {
+    userId: ID!
+    name: String!
+    email: String!
+    username: String!
+    photo: String
+}
+
+type Content {
+    contentId: ID!
+    name: String
+    description: String
+    service:Service
+    user: User
+}
+
 type Service {
     serviceId: ID!
     price: Float!
@@ -14,6 +30,15 @@ type Service {
     city: String
 }
 
+type Payment {
+    paymentId: ID!
+    totalAmount: Float!
+    userId: ID!
+    paid: Boolean!
+    services: [Service]
+}
+
+
 type Query {
     allServices: [Service]
     serviceById(serviceId: ID!): Service
@@ -28,33 +53,7 @@ type Query {
 }
 
 type Mutation {
-    createService(price: Float!, name: String!, description: String, serviceCategory: String!): Service
-    updateService(serviceId: ID!, price: Float, name: String, description: String, serviceCategory: String): Service
-    deleteService(serviceId: ID!): Boolean
     pay: String
     addToShoppingCart(serviceId: ID!): String
-}
-
-type Content {
-    contentId: ID!
-    name: String
-    description: String
-    service:Service
-    user: User
-}
-
-type Payment {
-    paymentId: ID!
-    totalAmount: Float!
-    userId: ID!
-    paid: Boolean!
-    services: [Service]
-}
-type User {
-    userId: ID!
-    name: String!
-    email: String!
-    username: String!
-    photo: String
 }
 

@@ -2,7 +2,6 @@ package com.turism.marketplace.dtos;
 
 import com.turism.marketplace.models.User;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

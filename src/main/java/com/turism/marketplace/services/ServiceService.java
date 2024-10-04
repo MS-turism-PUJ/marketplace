@@ -1,6 +1,5 @@
 package com.turism.marketplace.services;
 
-import com.turism.marketplace.models.Service;
 import com.turism.marketplace.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
