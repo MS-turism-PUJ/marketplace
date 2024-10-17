@@ -3,7 +3,6 @@ type User {
     name: String!
     email: String!
     username: String!
-    photo: String
 }
 
 type Content {
@@ -36,6 +35,22 @@ type Payment {
     userId: ID!
     paid: Boolean!
     services: [Service]
+}
+
+input Pagination {
+    page: Int = 1
+    size: Int = 10
+}
+
+input ServiceFilter {
+    filter: String
+    categories: [String]
+    price: PriceFilter
+}
+
+input PriceFilter {
+    lessThan: Float
+    moreThan: Float
 }
 
 
