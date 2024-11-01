@@ -22,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 public class MessageQueueConsumer {
-    private final String queueName = "usersQueue";
+    private final String usersQueueName = "usersQueue";
+    private final String servicesQueueName = "servicesQueue";
 
     private final UserService userService;
 
@@ -50,11 +51,19 @@ public class MessageQueueConsumer {
         return factory;
     }
 
-    @KafkaListener(topics = queueName, groupId = "marketplace-group")
-    public void listen(String userJson) {
+    @KafkaListener(topics = usersQueueName, groupId = "marketplace-group")
+    public void listenUsers(String userJson) {
         log.info("Received UserMessageDTO: {}", userJson);
         Gson gson = new Gson();
         UserMessageDTO user = gson.fromJson(userJson, UserMessageDTO.class);
         userService.createUser(user.toUser());
+    }
+
+    @KafkaListener(topics = servicesQueueName, groupId = "marketplace-group")
+    public void listenServices(String serviceJson) {
+        log.info("Received ServiceMessageDTO: {}", serviceJson);
+        // Gson gson = new Gson();
+        // UserMessageDTO user = gson.fromJson(userJson, UserMessageDTO.class);
+        // userService.createUser(user.toUser());
     }
 }
