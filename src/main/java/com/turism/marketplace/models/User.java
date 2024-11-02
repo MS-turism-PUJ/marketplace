@@ -18,16 +18,20 @@ import lombok.NoArgsConstructor;
 @Table  (name = "users")
 public class User {
     @Id
-    @Column(nullable = false)
     private String userId;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String email;
+
     @OneToMany (mappedBy = "contentId")
     private List<Content> contents;
+
     @OneToMany (mappedBy = "paymentId")
     private List<Payment> payments;
     

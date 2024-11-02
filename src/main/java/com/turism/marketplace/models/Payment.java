@@ -17,13 +17,17 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String paymentId;
+
     @Column(nullable = false)
     private Float totalAmount;
+
     @Column(nullable = false)
     private boolean paid;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
     @ManyToMany
     @JoinTable(name = "payment_has_services", // Nombre de la tabla intermedia
             joinColumns = @JoinColumn(name = "payment_id"), // Columna que representa esta entidad en la tabla

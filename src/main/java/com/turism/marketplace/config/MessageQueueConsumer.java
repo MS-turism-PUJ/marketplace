@@ -1,5 +1,6 @@
 package com.turism.marketplace.config;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +70,10 @@ public class MessageQueueConsumer {
         log.info("Received ServiceMessageDTO: {}", serviceJson);
         Gson gson = new Gson();
         ServiceMessageDTO service = gson.fromJson(serviceJson, ServiceMessageDTO.class);
-        serviceService.createService(service.toService());
+        try {
+            serviceService.createService(service.toService());
+        } catch (ParseException e) {
+            log.error("Error parsing service date", e);
+        }
     }
 }

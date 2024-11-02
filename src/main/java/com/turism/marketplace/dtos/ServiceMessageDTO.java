@@ -1,7 +1,9 @@
 package com.turism.marketplace.dtos;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 
 import com.turism.marketplace.models.Service;
 
@@ -35,7 +37,7 @@ public class ServiceMessageDTO implements Serializable {
 
     private String departureDate;
 
-    private String time;
+    private String duration;
 
     private String transportType;
 
@@ -61,7 +63,8 @@ public class ServiceMessageDTO implements Serializable {
         this.arrivalLatitude = service.getArrivalLatitude();
         this.arrivalLongitude = service.getArrivalLongitude();
         this.departureDate = service.getDepartureDate() == null ? null : service.getDepartureDate().toString();
-        this.time = service.getTime() == null ? null : service.getTime().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.duration = service.getDuration() == null ? null : sdf.format(service.getDuration());
         this.transportType = service.getTransportType();
         this.drink = service.getDrink();
         this.lunch = service.getLunch();
@@ -70,7 +73,7 @@ public class ServiceMessageDTO implements Serializable {
         this.userId = service.getUser().getUserId();
     }
 
-    public Service toService() {
+    public Service toService() throws ParseException {
         Service service = new Service();
         service.setServiceId(this.serviceId);
         service.setPrice(this.price);
@@ -82,8 +85,9 @@ public class ServiceMessageDTO implements Serializable {
         service.setLongitude(this.longitude);
         service.setArrivalLatitude(this.arrivalLatitude);
         service.setArrivalLongitude(this.arrivalLongitude);
-        service.setDepartureDate(this.departureDate == null ? null : java.sql.Date.valueOf(this.departureDate));
-        service.setTime(this.time == null ? null : LocalTime.parse(this.time));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        service.setDepartureDate(this.departureDate == null ? null : sdf.parse(this.departureDate));
+        service.setDuration(this.duration == null ? null : Duration.parse(this.duration));
         service.setTransportType(this.transportType);
         service.setDrink(this.drink);
         service.setLunch(this.lunch);

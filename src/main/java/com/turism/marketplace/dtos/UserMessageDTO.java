@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserMessageDTO implements Serializable{
     private String userId;
+
     private String username;
+
     private String name;
+
     private String email;
 
     public User toUser() {
