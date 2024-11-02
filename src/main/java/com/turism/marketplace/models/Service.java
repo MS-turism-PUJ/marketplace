@@ -21,7 +21,6 @@ import java.time.LocalTime;
 @Table(name = "services")
 public class Service {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String serviceId;
 
     @Column(nullable = false)
