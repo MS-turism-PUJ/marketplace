@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.turism.marketplace.services.ContentService;
 import com.turism.marketplace.services.ServiceService;
 import com.turism.marketplace.services.UserService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -19,6 +20,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+import com.turism.marketplace.dtos.ContentMessageDTO;
 import com.turism.marketplace.dtos.ServiceMessageDTO;
 import com.turism.marketplace.dtos.UserMessageDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +30,17 @@ import lombok.extern.slf4j.Slf4j;
 public class MessageQueueConsumer {
     private final String usersQueueName = "usersQueue";
     private final String servicesQueueName = "servicesQueue";
+    private final String contentsQueueName = "contentsQueue";
 
     private final UserService userService;
     private final ServiceService serviceService;
+    private final ContentService contentService;
 
     @Autowired
-    public MessageQueueConsumer(UserService userService, ServiceService serviceService) {
+    public MessageQueueConsumer(UserService userService, ServiceService serviceService, ContentService contentService) {
         this.userService = userService;
         this.serviceService = serviceService;
+        this.contentService = contentService;
     }
 
     @Bean
@@ -76,4 +81,13 @@ public class MessageQueueConsumer {
             log.error("Error parsing service date", e);
         }
     }
+
+    @KafkaListener(topics = contentsQueueName, groupId = "marketplace-group")
+    public void listenContents(String contentJson) {
+        log.info("Received ContentMessageDTO: {}", contentJson);
+        Gson gson = new Gson();
+        ContentMessageDTO content = gson.fromJson(contentJson, ContentMessageDTO.class);
+        contentService.createContent(content.toContent());
+    }
+
 }

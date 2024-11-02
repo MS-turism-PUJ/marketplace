@@ -19,4 +19,8 @@ public class ContentService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return contentRepository.findAll(pageable).getContent();
     }
+
+    public void createContent(Content content) {
+        contentRepository.save(content);
+    }
 }
