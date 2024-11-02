@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.turism.marketplace.services.ServiceService;
 import com.turism.marketplace.services.UserService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+import com.turism.marketplace.dtos.ServiceMessageDTO;
 import com.turism.marketplace.dtos.UserMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,10 +29,12 @@ public class MessageQueueConsumer {
     private final String servicesQueueName = "servicesQueue";
 
     private final UserService userService;
+    private final ServiceService serviceService;
 
     @Autowired
-    public MessageQueueConsumer(UserService userService) {
+    public MessageQueueConsumer(UserService userService, ServiceService serviceService) {
         this.userService = userService;
+        this.serviceService = serviceService;
     }
 
     @Bean
@@ -62,8 +67,8 @@ public class MessageQueueConsumer {
     @KafkaListener(topics = servicesQueueName, groupId = "marketplace-group")
     public void listenServices(String serviceJson) {
         log.info("Received ServiceMessageDTO: {}", serviceJson);
-        // Gson gson = new Gson();
-        // UserMessageDTO user = gson.fromJson(userJson, UserMessageDTO.class);
-        // userService.createUser(user.toUser());
+        Gson gson = new Gson();
+        ServiceMessageDTO service = gson.fromJson(serviceJson, ServiceMessageDTO.class);
+        serviceService.createService(service.toService());
     }
 }

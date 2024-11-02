@@ -16,5 +16,9 @@ public class ServiceService {
         Pageable pageable = PageRequest.of(page, size);
         return serviceRepository.findAll(pageable).getContent();
     }
+
+    public void createService(com.turism.marketplace.models.Service service) {
+        serviceRepository.save(service);
+    }
 }
 

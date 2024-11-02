@@ -31,7 +31,7 @@ public class ServiceController {
 
     @QueryMapping
     public List<Service> servicesByCategory(@Argument String serviceCategory) {
-        return serviceRepository.findByServiceCategory(serviceCategory);
+        return serviceRepository.findByCategory(serviceCategory);
     }
 
     @QueryMapping

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ServiceRepository extends JpaRepository<Service, String> {
 
-    List<Service> findByServiceCategory(String serviceCategory);
+    List<Service> findByCategory(String category);
 
     List<Service> findByDescriptionContaining(String description);
 
