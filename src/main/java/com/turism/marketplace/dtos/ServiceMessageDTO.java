@@ -6,7 +6,10 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 
 import com.turism.marketplace.models.Service;
+import com.turism.marketplace.models.ServiceCategory;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,7 +50,8 @@ public class ServiceMessageDTO implements Serializable {
 
     private String dessert;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private ServiceCategory category;
 
     private String userId;
 

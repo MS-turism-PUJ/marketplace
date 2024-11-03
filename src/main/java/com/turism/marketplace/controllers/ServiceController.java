@@ -4,6 +4,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.turism.marketplace.dtos.ServiceFilterDTO;
 import com.turism.marketplace.models.Service;
 import com.turism.marketplace.services.ServiceService;
 
@@ -29,27 +30,9 @@ public class ServiceController {
     }
 
     @QueryMapping
-    public List<Service> findServicesByFilter(@Argument Object filter, @Argument Integer page, @Argument Integer limit) {
-        System.out.println(filter);
-        System.out.println(page);
-        System.out.println(limit);
-        return List.of();
+    public List<Service> findServicesByFilter(@Argument ServiceFilterDTO filter, @Argument Integer page,
+            @Argument Integer limit) {
+        return serviceService.findByFilter(filter.getFilter(), filter.getPrice().getMoreThan(),
+                filter.getPrice().getLessThan(), filter.getCategories(), page, limit);
     }
-
-    // @QueryMapping
-    // public List<Service> servicesByCategory(@Argument String serviceCategory) {
-    //     return serviceService.findByCategory(serviceCategory);
-    // }
-
-    // @QueryMapping
-    // public List<Service> servicesByWord(@Argument String word) {
-    //     return Stream.of(
-    //             serviceRepository.findByDescriptionContaining(word),
-    //             serviceRepository.findByNameContaining(word),
-    //             serviceRepository.findByCountryContaining(word),
-    //             serviceRepository.findByCityContaining(word))
-    //             .flatMap(List::stream)
-    //             .distinct()
-    //             .collect(Collectors.toList());
-    // }
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table  (name = "users")
+@Table(name = "users")
 public class User {
     @Id
     private String userId;
@@ -34,6 +34,10 @@ public class User {
 
     @OneToMany (mappedBy = "paymentId")
     private List<Payment> payments;
+
+    public User(String userId) {
+        this.userId = userId;
+    }
     
     public User(String userId, String username, String name, String email) {
         this.userId = userId;

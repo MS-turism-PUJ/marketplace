@@ -9,7 +9,6 @@ import com.turism.marketplace.services.ContentService;
 import com.turism.marketplace.services.ServiceService;
 import com.turism.marketplace.services.UserService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -36,7 +35,6 @@ public class MessageQueueConsumer {
     private final ServiceService serviceService;
     private final ContentService contentService;
 
-    @Autowired
     public MessageQueueConsumer(UserService userService, ServiceService serviceService, ContentService contentService) {
         this.userService = userService;
         this.serviceService = serviceService;

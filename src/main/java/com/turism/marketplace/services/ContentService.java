@@ -24,7 +24,7 @@ public class ContentService {
     
     public List<Content> findByFilter(String filter, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return contentRepository.findByNameContainingOrDescriptionContaining(filter, filter, pageable);
+        return contentRepository.findByFilter(filter, pageable);
     }
 
     public Optional<Content> findById(String contentId) {

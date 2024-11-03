@@ -1,6 +1,7 @@
 package com.turism.marketplace.services;
 
 import com.turism.marketplace.models.Service;
+import com.turism.marketplace.models.ServiceCategory;
 import com.turism.marketplace.repositories.ServiceRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,5 +28,11 @@ public class ServiceService {
     public void createService(Service service) {
         serviceRepository.save(service);
     }
-}
 
+    public List<Service> findByFilter(String filter, Float minPrice, Float maxPrice, List<ServiceCategory> categories,
+            int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return serviceRepository.searchByFilter(filter, minPrice, maxPrice,
+                categories.stream().map(el -> el.toString()).toList(), pageable).getContent();
+    }
+}

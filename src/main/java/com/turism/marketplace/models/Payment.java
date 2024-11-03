@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table  (name = "payments")
+@Table(name = "payments")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,7 +22,7 @@ public class Payment {
     private Float totalAmount;
 
     @Column(nullable = false)
-    private boolean paid;
+    private Boolean paid;
 
     @ManyToOne
     @JoinColumn(name = "userId")

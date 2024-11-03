@@ -7,26 +7,31 @@ type User {
 
 type Content {
     contentId: ID!
-    name: String
+    name: String!
     description: String
-    service:Service
-    user: User
+    service: Service
+    user: User!
 }
 
 type Service {
-    serviceId: ID!
+    serviceId: String!
     price: Float!
     name: String!
-    description: String
-    category: String!
+    city: String!
+    country: String!
+    description: String!
+    category: ServiceCategory!
     latitude: Float
     longitude: Float
+    arrivalLatitude: Float
+    arrivalLongitude: Float
     departureDate: String
-    arrivalDate: String
+    duration: Int
     transportType: String
-    content: Content
-    country: String
-    city: String
+    drink: String
+    lunch: String
+    dessert: String
+    user: User!
 }
 
 type Payment {
@@ -54,7 +59,6 @@ input PriceFilter {
     lessThan: Float
     moreThan: Float
 }
-
 
 type Query {
     findAllServices(page: Int = 1, limit: Int = 10): [Service]

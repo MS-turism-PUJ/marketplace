@@ -69,7 +69,8 @@ public class Service {
     private String dessert;
     
     @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private ServiceCategory category;
     
     @OneToMany(mappedBy = "service")
     @JsonIgnore
@@ -79,6 +80,10 @@ public class Service {
     @ManyToOne
     @JsonIgnore
     private User user;
+
+    public Service(String serviceId) {
+        this.serviceId = serviceId;
+    }
 
     public Service(String name, Float price, String description, String city, String country) {
         this.name = name;
