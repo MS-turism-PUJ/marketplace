@@ -18,7 +18,7 @@ type Service {
     price: Float!
     name: String!
     description: String
-    serviceCategory: String!
+    category: String!
     latitude: Float
     longitude: Float
     departureDate: String
@@ -37,14 +37,16 @@ type Payment {
     services: [Service]
 }
 
-input Pagination {
-    page: Int = 1
-    size: Int = 10
+enum ServiceCategory {
+    ALIMENTATION
+    TRANSPORT
+    HOUSING
+    ECO_WALK
 }
 
 input ServiceFilter {
     filter: String
-    categories: [String]
+    categories: [ServiceCategory] = [ALIMENTATION, TRANSPORT, HOUSING, ECO_WALK]
     price: PriceFilter
 }
 
@@ -55,20 +57,22 @@ input PriceFilter {
 
 
 type Query {
-    allServices: [Service]
-    serviceById(serviceId: ID!): Service
+    findAllServices(page: Int = 1, limit: Int = 10): [Service]
+    findServiceById(serviceId: ID!): Service
     servicesByCategory(serviceCategory: String!): [Service]
     servicesByWord(word: String!): [Service]
+    findServicesByFilter(filter: ServiceFilter, page: Int = 1, limit: Int = 10): [Service]
 
-    allContents: [Content]
-    contentById(contentId: ID!): Content
+    findAllContents(page: Int = 1, limit: Int = 10): [Content]
+    findContentById(contentId: ID!): Content
+    findContentsByFilter(filter: String, page: Int = 1, limit: Int = 10): [Content]
 
-    findAllByUser: [Payment]
-    getShoppingCart: Payment
+    findAllMyPayments: [Payment]
+    getMyShoppingCart: Payment
 }
 
 type Mutation {
     pay: String
-    addToShoppingCart(serviceId: ID!): String
+    addToMyShoppingCart(serviceId: ID!): String
 }
 
