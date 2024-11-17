@@ -49,10 +49,10 @@ public class ContentControllerTest {
             "userEmailTest");
 
     static final Content mockContent1 = new Content(
-            "contentIdTest",
-            "contentNameTest",
-            "contentDescriptionTest",
-            "contentLinkTest",
+            "contentIdTest1",
+            "contentNameTest1",
+            "contentDescriptionTest1",
+            "contentLinkTest1",
             null,
             mockUser);
     
@@ -111,7 +111,7 @@ public class ContentControllerTest {
     void getContentById() {
         graphQlTester.document("""
             query {
-                findContentById(contentId: "contentIdTest") {
+                findContentById(contentId: "contentIdTest1") {
                     contentId
                     name
                     description

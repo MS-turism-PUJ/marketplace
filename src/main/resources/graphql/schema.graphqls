@@ -63,8 +63,6 @@ input PriceFilter {
 type Query {
     findAllServices(page: Int = 1, limit: Int = 10): [Service]
     findServiceById(serviceId: ID!): Service
-    servicesByCategory(serviceCategory: String!): [Service]
-    servicesByWord(word: String!): [Service]
     findServicesByFilter(filter: ServiceFilter, page: Int = 1, limit: Int = 10): [Service]
 
     findAllContents(page: Int = 1, limit: Int = 10): [Content]
