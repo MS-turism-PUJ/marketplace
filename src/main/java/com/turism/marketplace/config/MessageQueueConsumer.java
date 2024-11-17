@@ -9,6 +9,7 @@ import com.turism.marketplace.services.ContentService;
 import com.turism.marketplace.services.ServiceService;
 import com.turism.marketplace.services.UserService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -42,10 +43,11 @@ public class MessageQueueConsumer {
     }
 
     @Bean
-    public ConsumerFactory<String, UserMessageDTO> consumerFactory() {
+    public ConsumerFactory<String, UserMessageDTO> consumerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String kafkaBootstrapServers) {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put("auto.offset.reset", "earliest");
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "marketplace-group");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
@@ -54,9 +56,10 @@ public class MessageQueueConsumer {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserMessageDTO>> kafkaListenerContainerFactory() {
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserMessageDTO>> kafkaListenerContainerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String kafkaBootstrapServers) {
         ConcurrentKafkaListenerContainerFactory<String, UserMessageDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(consumerFactory(kafkaBootstrapServers));
         return factory;
     }
 
