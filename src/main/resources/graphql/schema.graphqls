@@ -71,10 +71,27 @@ type Query {
 
     findAllMyPayments: [Payment]
     getMyShoppingCart: Payment
+
+    getWeather(city: String!): WeatherData
 }
+
+
 
 type Mutation {
     pay: String
     addToMyShoppingCart(serviceId: ID!): String
 }
 
+type WeatherData {
+    city: String
+    country: String
+    temperature: Float
+    temp_max: Float
+    temp_min: Float
+    humidity: Int
+    pressure: Int
+    clouds: Int
+    wind_speed: Float
+    description: String
+    icon: String
+}
