@@ -11,9 +11,11 @@ import java.util.Optional;
 @org.springframework.stereotype.Service
 public class ServiceService {
     private final ServiceRepository serviceRepository;
+    private final CountryApiService countryApiService;
 
-    private ServiceService(ServiceRepository serviceRepository) {
+    private ServiceService(ServiceRepository serviceRepository, CountryApiService countryApiService) {
         this.serviceRepository = serviceRepository;
+        this.countryApiService = countryApiService;
     }
 
     public List<Service> findAll(int page, int size) {
@@ -26,6 +28,24 @@ public class ServiceService {
     }
 
     public void createService(Service service) {
+        CountryApiService.CountryInfo countryInfo = countryApiService.getCountryInfo(service.getCountry());
+
+        if (countryInfo == null) {
+            throw new IllegalArgumentException(
+                    "No se encontró información para el país especificado: " + service.getCountry());
+        }
+
+        // Asignar la información del país al servicio
+        service.setLatitude(countryInfo.getLatitude());
+        service.setLongitude(countryInfo.getLongitude());
+        service.setCountry(countryInfo.getCommonName());
+        service.setCapital(countryInfo.getCapital());
+        service.setCurrency(countryInfo.getCurrency());
+        service.setOfficialName(countryInfo.getOfficialName());
+        service.setRegion(countryInfo.getRegion());
+        service.setLanguage(countryInfo.getFirstLanguage());
+        service.setPopulation(countryInfo.getPopulation());
+
         serviceRepository.save(service);
     }
 
