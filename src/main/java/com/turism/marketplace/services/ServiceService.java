@@ -5,17 +5,23 @@ import com.turism.marketplace.models.ServiceCategory;
 import com.turism.marketplace.repositories.ServiceRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
 public class ServiceService {
     private final ServiceRepository serviceRepository;
     private final CountryApiService countryApiService;
+    private final WeatherService weatherService;
 
-    private ServiceService(ServiceRepository serviceRepository, CountryApiService countryApiService) {
+    private ServiceService(ServiceRepository serviceRepository, CountryApiService countryApiService,
+            WeatherService weatherService) {
         this.serviceRepository = serviceRepository;
         this.countryApiService = countryApiService;
+        this.weatherService = weatherService;
     }
 
     public List<Service> findAll(int page, int size) {
@@ -45,6 +51,15 @@ public class ServiceService {
         service.setRegion(countryInfo.getRegion());
         service.setLanguage(countryInfo.getFirstLanguage());
         service.setPopulation(countryInfo.getPopulation());
+
+        Map<String, Object> processedData = new HashMap<>();
+
+        processedData = weatherService.getWeatherData(service.getCountry());
+
+        // Imprimir el contenido del mapa en la consola
+        for (Map.Entry<String, Object> entry : processedData.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
 
         serviceRepository.save(service);
     }
