@@ -66,6 +66,20 @@ input PriceFilter {
     moreThan: Float
 }
 
+type WeatherData {
+    city: String
+    country: String
+    temperature: Float
+    temp_max: Float
+    temp_min: Float
+    humidity: Int
+    pressure: Int
+    clouds: Int
+    wind_speed: Float
+    description: String
+    icon: String
+}
+
 type Query {
     findAllServices(page: Int = 1, limit: Int = 10): [Service]
     findServiceById(serviceId: ID!): Service
@@ -81,23 +95,7 @@ type Query {
     getWeather(city: String!): WeatherData
 }
 
-
-
 type Mutation {
     pay: String
     addToMyShoppingCart(serviceId: ID!): String
-}
-
-type WeatherData {
-    city: String
-    country: String
-    temperature: Float
-    temp_max: Float
-    temp_min: Float
-    humidity: Int
-    pressure: Int
-    clouds: Int
-    wind_speed: Float
-    description: String
-    icon: String
 }
