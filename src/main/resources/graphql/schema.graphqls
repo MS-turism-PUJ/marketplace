@@ -19,10 +19,16 @@ type Service {
     name: String!
     city: String!
     country: String!
-    description: String!
-    category: ServiceCategory!
+    capital: String
+    currency: String
+    officialName: String
+    region: String
+    language: String
+    population: Int
     latitude: Float
     longitude: Float
+    description: String!
+    category: ServiceCategory!
     arrivalLatitude: Float
     arrivalLongitude: Float
     departureDate: String

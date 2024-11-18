@@ -63,10 +63,12 @@ public class ServiceControllerTest {
             null,
             null,
             null,
-            "alimentationDrinkTest1",
+            null,
+            null,
+            null, null, null, "alimentationDrinkTest1",
             "alimentationLunchTest1",
             "alimentationDessertTest1",
-            ServiceCategory.ALIMENTATION,
+            null, ServiceCategory.ALIMENTATION,
             null,
             mockUser);
 
@@ -84,9 +86,15 @@ public class ServiceControllerTest {
             null,
             null,
             null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             "alimentationDrinkTest2",
             "alimentationLunchTest2",
-            "alimentationDessertTest2",
             ServiceCategory.ALIMENTATION,
             null,
             mockUser);
@@ -176,28 +184,30 @@ public class ServiceControllerTest {
     @Test
     @Order(1)
     void getServicesByFilter() {
-        graphQlTester.document("""
-                    query {
-                        findServicesByFilter(filter: {filter: "alimentationNameTest1", price: {moreThan: 5.0, lessThan: 15.0}, categories: [ALIMENTATION]}, page: 1, limit: 10) {
-                            serviceId
-                            price
-                            name
-                            city
-                            country
-                            description
-                            drink
-                            lunch
-                            dessert
-                            category
-                            user {
-                                userId
-                                name
-                                email
-                                username
-                            }
-                        }
-                    }
-                """)
+        graphQlTester
+                .document(
+                        """
+                                    query {
+                                        findServicesByFilter(filter: {filter: "alimentationNameTest1", price: {moreThan: 5.0, lessThan: 15.0}, categories: [ALIMENTATION]}, page: 1, limit: 10) {
+                                            serviceId
+                                            price
+                                            name
+                                            city
+                                            country
+                                            description
+                                            drink
+                                            lunch
+                                            dessert
+                                            category
+                                            user {
+                                                userId
+                                                name
+                                                email
+                                                username
+                                            }
+                                        }
+                                    }
+                                """)
                 .execute()
                 .path("findServicesByFilter")
                 .entityList(Service.class)

@@ -65,10 +65,12 @@ public class PaymentControllerTest {
             null,
             null,
             null,
-            "alimentationDrinkTest1",
+            null,
+            null,
+            null, null, null, "alimentationDrinkTest1",
             "alimentationLunchTest1",
             "alimentationDessertTest1",
-            ServiceCategory.ALIMENTATION,
+            null, ServiceCategory.ALIMENTATION,
             null,
             mockUser);
 
@@ -86,10 +88,12 @@ public class PaymentControllerTest {
             null,
             null,
             null,
-            "alimentationDrinkTest2",
+            null,
+            null,
+            null, null, null, "alimentationDrinkTest2",
             "alimentationLunchTest2",
             "alimentationDessertTest2",
-            ServiceCategory.ALIMENTATION,
+            null, ServiceCategory.ALIMENTATION,
             null,
             mockUser);
 
