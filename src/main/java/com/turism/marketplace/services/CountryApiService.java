@@ -1,11 +1,14 @@
 package com.turism.marketplace.services;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -21,17 +24,58 @@ public class CountryApiService {
     }
 
     public CountryInfo getCountryInfo(String countryName) {
-        // Llamada a la API REST Countries
         String url = "https://restcountries.com/v3.1/name/" + countryName;
-        String jsonResponse = restTemplate.getForObject(url, String.class);
 
-        // Parsear la respuesta JSON usando Gson
-        Type listType = new TypeToken<List<CountryInfo>>() {
-        }.getType();
-        List<CountryInfo> countries = gson.fromJson(jsonResponse, listType);
+        try {
+            // Realizar la llamada a la API
+            String jsonResponse = restTemplate.getForObject(url, String.class);
 
-        // Devolver el primer país (en caso de múltiples resultados)
-        return (countries != null && !countries.isEmpty()) ? countries.get(0) : null;
+            if (jsonResponse == null || jsonResponse.isEmpty()) {
+                return createEmptyCountryInfo();
+            }
+
+            // Parsear la respuesta JSON
+            Type listType = new TypeToken<List<CountryInfo>>() {
+            }.getType();
+            List<CountryInfo> countries = gson.fromJson(jsonResponse, listType);
+
+            // Devolver el primer resultado o un objeto vacío si no hay resultados
+            return (countries != null && !countries.isEmpty()) ? countries.get(0) : createEmptyCountryInfo();
+
+        } catch (HttpClientErrorException.NotFound e) {
+            // Manejar el caso en que el país no se encuentre
+            return createEmptyCountryInfo();
+        } catch (HttpClientErrorException e) {
+            throw new CountryApiException("Error en la solicitud al servidor: " + e.getMessage(), e);
+        } catch (JsonSyntaxException e) {
+            throw new CountryApiException("Error al parsear la respuesta de la API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new CountryApiException("Ocurrió un error inesperado: " + e.getMessage(), e);
+        }
+    }
+
+    // Método para crear un CountryInfo vacío (con valores nulos)
+    private CountryInfo createEmptyCountryInfo() {
+        CountryInfo emptyCountryInfo = new CountryInfo();
+        emptyCountryInfo.name = new CountryInfo.Name();
+        emptyCountryInfo.capital = Collections.emptyList();
+        emptyCountryInfo.currencies = Collections.emptyMap();
+        emptyCountryInfo.region = null;
+        emptyCountryInfo.languages = Collections.emptyMap();
+        emptyCountryInfo.latlng = Collections.emptyList();
+        emptyCountryInfo.population = 0;
+        return emptyCountryInfo;
+    }
+
+    // Excepción personalizada para la API de Country
+    public static class CountryApiException extends RuntimeException {
+        public CountryApiException(String message) {
+            super(message);
+        }
+
+        public CountryApiException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
     // Modelo para representar la información relevante del país

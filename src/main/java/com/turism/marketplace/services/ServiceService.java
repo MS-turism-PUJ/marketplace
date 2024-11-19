@@ -1,5 +1,6 @@
 package com.turism.marketplace.services;
 
+import com.turism.marketplace.dtos.WeatherDTO;
 import com.turism.marketplace.models.Service;
 import com.turism.marketplace.models.ServiceCategory;
 import com.turism.marketplace.repositories.ServiceRepository;
@@ -49,9 +50,9 @@ public class ServiceService {
         }
 
         // Asignar la información del país al servicio
-        // service.setLatitude(countryInfo.getLatitude());
-        // service.setLongitude(countryInfo.getLongitude());
-        service.setCountry(countryInfo.getCommonName());
+        service.setLatitude(countryInfo.getLatitude());
+        service.setLongitude(countryInfo.getLongitude());
+        service.setOfficialName(countryInfo.getOfficialName());
         service.setCapital(countryInfo.getCapital());
         service.setCurrency(countryInfo.getCurrency());
         service.setOfficialName(countryInfo.getOfficialName());
@@ -59,14 +60,13 @@ public class ServiceService {
         service.setLanguage(countryInfo.getFirstLanguage());
         service.setPopulation(countryInfo.getPopulation());
 
-        Map<String, Object> processedData = new HashMap<>();
+        WeatherDTO weatherData = new WeatherDTO();
 
-        processedData = weatherService.getWeatherData(service.getCountry());
+        weatherData = weatherService.getWeatherData(service.getCountry());
 
         // Imprimir el contenido del mapa en la consola
-        for (Map.Entry<String, Object> entry : processedData.entrySet()) {
-            log.info(entry.getKey() + " : " + entry.getValue());
-        }
+
+        System.out.println(weatherData);
 
         serviceRepository.save(service);
     }

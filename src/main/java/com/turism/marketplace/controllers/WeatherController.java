@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.turism.marketplace.dtos.WeatherDTO;
 import com.turism.marketplace.services.WeatherService;
 
 @Controller
@@ -24,7 +25,7 @@ public class WeatherController {
      * @return Datos procesados del clima
      */
     @QueryMapping
-    public Map<String, Object> getWeather(@Argument String city) {
+    public WeatherDTO getWeather(@Argument String city) {
         return weatherService.getWeatherData(city);
     }
 }
