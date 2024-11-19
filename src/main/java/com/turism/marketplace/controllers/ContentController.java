@@ -32,6 +32,8 @@ public class ContentController {
     @QueryMapping
     public List<Content> findContentsByFilter(@Argument ServiceFilterDTO filter, @Argument Integer page,
             @Argument Integer limit) {
+        String searchFilter = filter.getFilter() == null ? "" : filter.getFilter();
+
         Float minPrice;
         Float maxPrice;
         if (filter.getPrice() == null) {
@@ -41,6 +43,7 @@ public class ContentController {
             minPrice = filter.getPrice().getMoreThan();
             maxPrice = filter.getPrice().getLessThan();
         }
-        return contentService.findByFilter(filter.getFilter(), minPrice, maxPrice, filter.getCategories(), page, limit);
+
+        return contentService.findByFilter(searchFilter, minPrice, maxPrice, filter.getCategories(), page, limit);
     }
 }
