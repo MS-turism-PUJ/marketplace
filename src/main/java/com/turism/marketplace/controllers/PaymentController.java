@@ -52,4 +52,16 @@ public class PaymentController {
 
         return "Service added";
     }
+
+    @MutationMapping
+    public String removeFromMyShoppingCart(@Argument String serviceId) {
+        String preferredUsername = request.getHeader("X-Preferred-Username");
+        try {
+            paymentService.removeFromShoppingCart(preferredUsername, serviceId);
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
+        }
+
+        return "Service removed";
+    }
 }

@@ -54,4 +54,20 @@ public class PaymentService {
         shoppingCart.getServices().add(optionalService.get());
         paymentRepository.save(shoppingCart);
     }
+
+    public void removeFromShoppingCart(String username, String serviceId) {
+        User user = userRepository.findByUsername(username);
+        Payment shoppingCart = paymentRepository.findByUserAndPaidFalse(user);
+        Optional<Service> optionalService = serviceRepository.findById(serviceId);
+        if (optionalService.isEmpty()) {
+            throw new IllegalArgumentException("Service not found");
+        }
+        if (shoppingCart == null) {
+            shoppingCart = new Payment(0F, user);
+        }
+
+        shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - optionalService.get().getPrice());
+        shoppingCart.getServices().remove(optionalService.get());
+        paymentRepository.save(shoppingCart);
+    }
 }

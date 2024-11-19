@@ -98,4 +98,5 @@ type Query {
 type Mutation {
     pay: String
     addToMyShoppingCart(serviceId: ID!): String
+    removeFromMyShoppingCart(serviceId: ID!): String
 }
