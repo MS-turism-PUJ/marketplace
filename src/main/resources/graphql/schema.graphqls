@@ -58,10 +58,6 @@ enum ServiceCategory {
 input ServiceFilter {
     filter: String
     categories: [ServiceCategory] = [ALIMENTATION, TRANSPORT, HOUSING, ECO_WALK]
-    price: PriceFilter
-}
-
-input PriceFilter {
     lessThan: Float
     moreThan: Float
 }

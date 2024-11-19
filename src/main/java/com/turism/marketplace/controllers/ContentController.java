@@ -34,16 +34,6 @@ public class ContentController {
             @Argument Integer limit) {
         String searchFilter = filter.getFilter() == null ? "" : filter.getFilter();
 
-        Float minPrice;
-        Float maxPrice;
-        if (filter.getPrice() == null) {
-            minPrice = null;
-            maxPrice = null;
-        } else {
-            minPrice = filter.getPrice().getMoreThan();
-            maxPrice = filter.getPrice().getLessThan();
-        }
-
-        return contentService.findByFilter(searchFilter, minPrice, maxPrice, filter.getCategories(), page, limit);
+        return contentService.findByFilter(searchFilter, filter.getMoreThan(), filter.getLessThan(), filter.getCategories(), page, limit);
     }
 }

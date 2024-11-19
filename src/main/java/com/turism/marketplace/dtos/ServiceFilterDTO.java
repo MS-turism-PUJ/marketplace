@@ -10,11 +10,6 @@ import lombok.Data;
 public class ServiceFilterDTO {
     private String filter;
     private List<ServiceCategory> categories;
-    private PriceFilter price;
-
-    @Data
-    public class PriceFilter {
-        private Float lessThan;
-        private Float moreThan;
-    }
+    private Float lessThan;
+    private Float moreThan;
 }
