@@ -42,6 +42,7 @@ public class PaymentService {
     public void addToShoppingCart(String username, String serviceId) {
         User user = userRepository.findByUsername(username);
         Payment shoppingCart = paymentRepository.findByUserAndPaidFalse(user);
+
         Optional<Service> optionalService = serviceRepository.findById(serviceId);
         if (optionalService.isEmpty()) {
             throw new IllegalArgumentException("Service not found");
@@ -50,8 +51,14 @@ public class PaymentService {
             shoppingCart = new Payment(0F, user);
         }
 
-        shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + optionalService.get().getPrice());
+        Integer lenght = shoppingCart.getServices().size();
         shoppingCart.getServices().add(optionalService.get());
+
+        if (lenght.equals(shoppingCart.getServices().size())) {
+            throw new IllegalArgumentException("Service already added");
+        }
+
+        shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + optionalService.get().getPrice());
         paymentRepository.save(shoppingCart);
     }
 
@@ -66,8 +73,12 @@ public class PaymentService {
             shoppingCart = new Payment(0F, user);
         }
 
-        shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - optionalService.get().getPrice());
+        Integer length = shoppingCart.getServices().size();
         shoppingCart.getServices().remove(optionalService.get());
+        if (length.equals(shoppingCart.getServices().size())) {
+            throw new IllegalArgumentException("Service not present");
+        }
+        shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - optionalService.get().getPrice());
         paymentRepository.save(shoppingCart);
     }
 }

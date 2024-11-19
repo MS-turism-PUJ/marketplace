@@ -11,8 +11,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.Duration;
-
 @Entity
 @Getter
 @Setter
@@ -109,5 +107,17 @@ public class Service {
         this.description = description;
         this.city = city;
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Service service = (Service) obj;
+        return serviceId.equals(service.getServiceId());
     }
 }

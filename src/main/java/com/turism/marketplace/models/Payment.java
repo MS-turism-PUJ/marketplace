@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -34,12 +33,12 @@ public class Payment {
             // intermedia
             inverseJoinColumns = @JoinColumn(name = "service_id") // Columna que representa la otra entidad
     )
-    private List<Service> services;
+    private Set<Service> services;
 
     public Payment(Float totalAmount, User user) {
         this.totalAmount = totalAmount;
         this.paid = false;
         this.user = user;
-        this.services = new ArrayList<>();
+        this.services = Set.of();
     }
 }

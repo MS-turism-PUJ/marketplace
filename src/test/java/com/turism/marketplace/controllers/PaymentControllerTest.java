@@ -19,6 +19,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.turism.marketplace.models.Payment;
 import com.turism.marketplace.models.Service;
 import com.turism.marketplace.models.ServiceCategory;
@@ -159,8 +162,9 @@ public class PaymentControllerTest {
                 .satisfies(payment -> {
                     assertThat(payment.getTotalAmount()).isEqualTo(mockService1.getPrice() + mockService2.getPrice());
                     assertThat(payment.getServices()).hasSize(2);
-                    assertThat(payment.getServices().get(0).getName()).isEqualTo(mockService1.getName());
-                    assertThat(payment.getServices().get(1).getName()).isEqualTo(mockService2.getName());
+                    List<Service> services = new ArrayList<>(payment.getServices());
+                    assertThat(services.get(0).getName()).isEqualTo(mockService1.getName());
+                    assertThat(services.get(1).getName()).isEqualTo(mockService2.getName());
                     assertThat(payment.getPaid()).isFalse();
                     assertThat(payment.getUser().getUserId()).isEqualTo(mockUser.getUserId());
                 });
@@ -210,8 +214,9 @@ public class PaymentControllerTest {
                     Payment payment = payments.get(0);
                     assertThat(payment.getTotalAmount()).isEqualTo(mockService1.getPrice() + mockService2.getPrice());
                     assertThat(payment.getServices()).hasSize(2);
-                    assertThat(payment.getServices().get(0).getName()).isEqualTo(mockService1.getName());
-                    assertThat(payment.getServices().get(1).getName()).isEqualTo(mockService2.getName());
+                    List<Service> services = new ArrayList<>(payment.getServices());
+                    assertThat(services.get(0).getName()).isEqualTo(mockService1.getName());
+                    assertThat(services.get(1).getName()).isEqualTo(mockService2.getName());
                     assertThat(payment.getPaid()).isTrue();
                     assertThat(payment.getUser().getUserId()).isEqualTo(mockUser.getUserId());
                 });

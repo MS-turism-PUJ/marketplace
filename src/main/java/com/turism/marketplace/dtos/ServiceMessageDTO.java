@@ -66,7 +66,6 @@ public class ServiceMessageDTO implements Serializable {
         this.arrivalLatitude = service.getArrivalLatitude();
         this.arrivalLongitude = service.getArrivalLongitude();
         this.departureDate = service.getDepartureDate() == null ? null : service.getDepartureDate().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.duration = service.getDuration();
         this.transportType = service.getTransportType();
         this.drink = service.getDrink();
