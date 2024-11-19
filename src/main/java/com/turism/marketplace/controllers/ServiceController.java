@@ -32,7 +32,15 @@ public class ServiceController {
     @QueryMapping
     public List<Service> findServicesByFilter(@Argument ServiceFilterDTO filter, @Argument Integer page,
             @Argument Integer limit) {
-        return serviceService.findByFilter(filter.getFilter(), filter.getPrice().getMoreThan(),
-                filter.getPrice().getLessThan(), filter.getCategories(), page, limit);
+        Float minPrice;
+        Float maxPrice;
+        if (filter.getPrice() == null) {
+            minPrice = null;
+            maxPrice = null;
+        } else {
+            minPrice = filter.getPrice().getMoreThan();
+            maxPrice = filter.getPrice().getLessThan();
+        }
+        return serviceService.findByFilter(filter.getFilter(), minPrice, maxPrice, filter.getCategories(), page, limit);
     }
 }

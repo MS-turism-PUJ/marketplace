@@ -87,7 +87,7 @@ type Query {
 
     findAllContents(page: Int = 1, limit: Int = 10): [Content]
     findContentById(contentId: ID!): Content
-    findContentsByFilter(filter: String, page: Int = 1, limit: Int = 10): [Content]
+    findContentsByFilter(filter: ServiceFilter, page: Int = 1, limit: Int = 10): [Content]
 
     findAllMyPayments: [Payment]
     getMyShoppingCart: Payment

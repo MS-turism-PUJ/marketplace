@@ -3,6 +3,9 @@ package com.turism.marketplace.services;
 import com.turism.marketplace.models.Service;
 import com.turism.marketplace.models.ServiceCategory;
 import com.turism.marketplace.repositories.ServiceRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @org.springframework.stereotype.Service
 public class ServiceService {
     private final ServiceRepository serviceRepository;
@@ -25,15 +29,18 @@ public class ServiceService {
     }
 
     public List<Service> findAll(int page, int size) {
+        log.info("Finding all services");
         Pageable pageable = PageRequest.of(page - 1, size);
         return serviceRepository.findAll(pageable).getContent();
     }
 
     public Optional<Service> findById(String serviceId) {
+        log.info("Finding service by id: " + serviceId);
         return serviceRepository.findById(serviceId);
     }
 
     public void createService(Service service) {
+        log.info("Creating service: " + service.getName());
         CountryApiService.CountryInfo countryInfo = countryApiService.getCountryInfo(service.getCountry());
 
         if (countryInfo == null) {
@@ -58,7 +65,7 @@ public class ServiceService {
 
         // Imprimir el contenido del mapa en la consola
         for (Map.Entry<String, Object> entry : processedData.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+            log.info(entry.getKey() + " : " + entry.getValue());
         }
 
         serviceRepository.save(service);
@@ -66,6 +73,7 @@ public class ServiceService {
 
     public List<Service> findByFilter(String filter, Float minPrice, Float maxPrice, List<ServiceCategory> categories,
             int page, int size) {
+        log.info("Finding services by filter");
         Pageable pageable = PageRequest.of(page - 1, size);
         return serviceRepository.searchByFilter(filter, minPrice, maxPrice,
                 categories.stream().map(el -> el.toString()).toList(), pageable).getContent();
