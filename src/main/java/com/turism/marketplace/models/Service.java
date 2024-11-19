@@ -72,7 +72,7 @@ public class Service {
     private Date departureDate;
 
     @Column
-    private Duration duration;
+    private Integer duration;
 
     @Column
     private String transportType;

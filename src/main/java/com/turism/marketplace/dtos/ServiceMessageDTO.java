@@ -3,7 +3,6 @@ package com.turism.marketplace.dtos;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 
 import com.turism.marketplace.models.Service;
 import com.turism.marketplace.models.ServiceCategory;
@@ -40,7 +39,7 @@ public class ServiceMessageDTO implements Serializable {
 
     private String departureDate;
 
-    private String duration;
+    private Integer duration;
 
     private String transportType;
 
@@ -68,7 +67,7 @@ public class ServiceMessageDTO implements Serializable {
         this.arrivalLongitude = service.getArrivalLongitude();
         this.departureDate = service.getDepartureDate() == null ? null : service.getDepartureDate().toString();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.duration = service.getDuration() == null ? null : sdf.format(service.getDuration());
+        this.duration = service.getDuration();
         this.transportType = service.getTransportType();
         this.drink = service.getDrink();
         this.lunch = service.getLunch();
@@ -91,7 +90,7 @@ public class ServiceMessageDTO implements Serializable {
         service.setArrivalLongitude(this.arrivalLongitude);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         service.setDepartureDate(this.departureDate == null ? null : sdf.parse(this.departureDate));
-        service.setDuration(this.duration == null ? null : Duration.parse(this.duration));
+        service.setDuration(this.duration);
         service.setTransportType(this.transportType);
         service.setDrink(this.drink);
         service.setLunch(this.lunch);
