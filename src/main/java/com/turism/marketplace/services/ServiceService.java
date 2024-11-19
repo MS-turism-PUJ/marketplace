@@ -42,8 +42,8 @@ public class ServiceService {
         }
 
         // Asignar la información del país al servicio
-        service.setLatitude(countryInfo.getLatitude());
-        service.setLongitude(countryInfo.getLongitude());
+        // service.setLatitude(countryInfo.getLatitude());
+        // service.setLongitude(countryInfo.getLongitude());
         service.setCountry(countryInfo.getCommonName());
         service.setCapital(countryInfo.getCapital());
         service.setCurrency(countryInfo.getCurrency());
