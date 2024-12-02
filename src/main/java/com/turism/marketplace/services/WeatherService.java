@@ -1,6 +1,7 @@
 package com.turism.marketplace.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,12 +14,14 @@ import java.util.Map;
 @Service
 public class WeatherService {
 
-    private final String apiKey = "fdc1185eb2308a1bb3545c8aef23f7f4";
-    private final String baseUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=" + apiKey;
+    @Value("${WEATHER_API_KEY}")
+    private String apiKey;
+
+    private final String baseUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=";
 
     public WeatherDTO getWeatherData(String city) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = baseUrl + "&q=" + city;
+        String url = baseUrl + apiKey + "&q=" + city;
 
         try {
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);

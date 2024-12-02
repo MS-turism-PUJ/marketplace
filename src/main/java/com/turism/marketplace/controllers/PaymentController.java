@@ -3,6 +3,7 @@ package com.turism.marketplace.controllers;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.turism.marketplace.models.Payment;
 import com.turism.marketplace.services.PaymentService;
 
+@Slf4j
 @Controller
 public class PaymentController {
     private final PaymentService paymentService;
@@ -43,6 +45,7 @@ public class PaymentController {
 
     @MutationMapping
     public String addToMyShoppingCart(@Argument String serviceId) {
+        log.info("Adding service {} to shopping cart", serviceId);
         String preferredUsername = request.getHeader("X-Preferred-Username");
         try {
             paymentService.addToShoppingCart(preferredUsername, serviceId);
