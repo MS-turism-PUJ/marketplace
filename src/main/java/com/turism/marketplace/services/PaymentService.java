@@ -52,6 +52,7 @@ public class PaymentService {
         }
 
         Integer lenght = shoppingCart.getServices().size();
+        System.out.println(shoppingCart);
         shoppingCart.getServices().add(optionalService.get());
 
         if (lenght.equals(shoppingCart.getServices().size())) {

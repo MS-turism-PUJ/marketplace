@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -39,6 +40,6 @@ public class Payment {
         this.totalAmount = totalAmount;
         this.paid = false;
         this.user = user;
-        this.services = Set.of();
+        this.services = new HashSet<>();
     }
 }
